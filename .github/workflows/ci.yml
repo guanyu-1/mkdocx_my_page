@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -27,7 +27,7 @@ jobs:
           mkdocs build
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4 # 使用最新的版本 v3
+        uses: actions/upload-artifact@v4
         with:
           name: built-site
           path: ./site
@@ -47,8 +47,19 @@ jobs:
         with:
           name: built-site
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3 # 使用专门用于部署 GitHub Pages 的动作
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./built-site/
+      - name: Setup Git config
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Create a commit
+        run: |
+          cd ${{ env.GITHUB_WORKSPACE }}/site
+          git init
+          git add .
+          git commit -m "Deploy updated documentation"
+
+      - name: Push the commit or tag
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/guanyu-1/mkdocx_my_page.git
+          git push origin gh-pages
