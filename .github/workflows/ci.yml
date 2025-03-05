@@ -27,7 +27,7 @@ jobs:
           mkdocs build
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3 # 使用最新的版本 v3
+        uses: actions/upload-artifact@v4 # 使用最新的版本 v3
         with:
           name: built-site
           path: ./site
@@ -43,7 +43,7 @@ jobs:
 
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: built-site
 
