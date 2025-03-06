@@ -11,7 +11,7 @@ jobs:
     
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4.2.2 # 使用最新版的checkout动作
+        uses: actions/checkout@v4  # 使用最新版的checkout动作
 
       - name: Set up Python
         uses: actions/setup-python@v4
